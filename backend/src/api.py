@@ -16,10 +16,10 @@ CORS(app)
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
-# db_drop_and_create_all()
+db_drop_and_create_all()
 
 ## ROUTES
-'''
+'''#
 @TODO implement endpoint
     GET /drinks
         it should be a public endpoint
@@ -28,6 +28,14 @@ CORS(app)
         or appropriate status code indicating reason for failure
 '''
 
+@app.route('/drinks', methods=['GET'])
+def get_drinks():
+    drinks_list = Drink.query.all()
+
+    return jsonify({
+        'success': True,
+        'drinks': [drink.short() for drink in drinks_list]
+    }), 200
 
 '''
 @TODO implement endpoint
